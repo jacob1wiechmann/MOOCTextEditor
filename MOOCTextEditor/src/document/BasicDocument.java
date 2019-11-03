@@ -37,8 +37,8 @@ public class BasicDocument extends Document
 		//getToken(text);
 		//TODO: Implement this method in week 2 according to the comments above.  
 		// See the Module 2 support videos if you need help.
-		List<String> tokens = getTokens("[a-zA-Z]+");
-		return tokens.size();
+		List<String> numWords = getTokens("[a-zA-Z]+");
+	    return numWords.size();
 	}
 	
 	/**
@@ -58,8 +58,8 @@ public class BasicDocument extends Document
 	{
 	    //TODO: Implement this method.  See the Module 2 support videos 
         // if you need help.
-		List<String> tokens = getTokens("[^?.!]+");  
-		return tokens.size();
+		List<String> numWords = getTokens("[^.!?]+");
+	    return numWords.size();
 	}
 	
 	/**
@@ -91,7 +91,6 @@ public class BasicDocument extends Document
 			totalSyllables += countSyllables(word);
 		}
 		return totalSyllables;
-	
 	}
 	
 	

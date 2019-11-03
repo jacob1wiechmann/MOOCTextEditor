@@ -34,6 +34,7 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumWords()
 	{
+		//getToken(text);
 		//TODO: Implement this method in week 2 according to the comments above.  
 		// See the Module 2 support videos if you need help.
 	    return 0;

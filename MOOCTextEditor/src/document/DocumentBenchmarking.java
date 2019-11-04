@@ -69,6 +69,17 @@ public class DocumentBenchmarking {
 		}
 	
 	}
+	private static double measureTime(int trials, Document doc) {
+		long startTime = System.nanoTime();
+		
+		for (int i = 0; i < trials; i++) {
+			doc.getFleschScore();
+		}
+		long endTime = System.nanoTime();
+		double elapsedTime = (endTime-startTime)/1000000000.0;
+
+		return elapsedTime;
+	}
 	
 	/** Get a specified number of characters from a text file
 	 * 

@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
 
 public class DocumentBenchmarking {
 
-	
+	private static String str;
 	public static void main(String [] args) {
 
 	    // Run each test more than once to get bigger numbers and less noise.
@@ -58,7 +58,14 @@ public class DocumentBenchmarking {
 			 * 6. Print out the time it took to complete the loop in step 5 
 			 *      (on the same line as the first print statement) followed by a newline (\n) 
 			 */  
-			 
+			System.out.print(numToCheck+"\t");
+			
+			str = getStringFromFile(textfile,numToCheck);
+			
+			System.out.print(measureTime(trials,new BasicDocument(str))+"\t");
+			
+			System.out.printf("%.9f",measureTime(trials,new EfficientDocument(str)));
+			System.out.println();
 		}
 	
 	}

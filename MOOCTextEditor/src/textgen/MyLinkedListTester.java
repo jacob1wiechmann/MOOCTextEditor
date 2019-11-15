@@ -114,6 +114,38 @@ public class MyLinkedListTester {
 		assertEquals("Remove: check element 0 is correct ", (Integer)21, list1.get(0));
 		assertEquals("Remove: check size is correct ", 2, list1.size());
 		
+		// 21, 42, 500
+				int b = list1.remove(1);
+				assertEquals("Remove: check b is correct ", 42, b);
+				assertEquals("Remove: check element 0 is correct ", (Integer) 21, list1.get(0));
+				assertEquals("Remove: check size is correct ", 2, list1.size());
+
+				list1.add(3000);
+				// 21, 500, 3000;
+				int c = list1.remove(2);
+				assertEquals("Remove: check c is correct ", 3000, c);
+				assertEquals("Remove: check element 1 is correct ", (Integer) 500, list1.get(1));
+				assertEquals("Remove: check size is correct ", 2, list1.size());
+				
+				try {
+					list1.remove(45);
+					fail("Check out of bounds");
+				} catch (IndexOutOfBoundsException e) {
+				}
+				
+				try {
+					list1.remove(-1);
+					fail("Check out of bounds");
+				} catch (IndexOutOfBoundsException e) {
+				}
+				
+				try {
+					lst.remove(0);
+					fail("Check out of bounds");
+				} catch (IndexOutOfBoundsException e) {
+				}
+
+			}
 		// TODO: Add more tests here
 	}
 	
@@ -124,6 +156,17 @@ public class MyLinkedListTester {
 	public void testAddEnd()
 	{
         // TODO: implement this test
+		endList = new MyLinkedList<Integer>();
+		endList.add(30);
+		assertEquals("Add 30", (Integer) 30, endList.get(0));
+		endList.add(50);
+		assertEquals("Add 50", (Integer) 50, endList.get(1));
+		try {
+			endList.add(null);
+			fail("Check null");
+		} catch (NullPointerException e) {
+
+		}
 		
 	}
 
@@ -133,6 +176,9 @@ public class MyLinkedListTester {
 	public void testSize()
 	{
 		// TODO: implement this test
+		int shortListSize = shortList.size();
+		assertEquals("Short list size is correct ", 2, shortListSize);
+		assertEquals("Empty list size is correct ", 0, lst.size());
 	}
 
 	
@@ -145,6 +191,31 @@ public class MyLinkedListTester {
 	public void testAddAtIndex()
 	{
         // TODO: implement this test
+		indexList = new MyLinkedList<Integer>();
+		indexList.add(30);
+		indexList.add(50);
+		indexList.add(70);
+		indexList.add(1, 31);
+		indexList.add(2, 32);
+		assertEquals("Add 31", (Integer) 31, indexList.get(1));
+		assertEquals("Add 32", (Integer) 32, indexList.get(2));
+		indexList.add(0, 1);
+		assertEquals("Add 1 to index 0", (Integer) 1, indexList.get(0));
+		indexList.add(6, 500);
+		assertEquals("Add 500 to end of list", (Integer) 500, indexList.get(6));
+		try {
+			indexList.add(-1, -100);
+			fail("Check invalid index");
+		} catch (IndexOutOfBoundsException e) {
+
+		}
+		
+		try {
+			indexList.add(30000, 20);
+			fail("Check invalid index");
+		} catch (IndexOutOfBoundsException e) {
+
+		}
 		
 	}
 	
@@ -153,6 +224,22 @@ public class MyLinkedListTester {
 	public void testSet()
 	{
 	    // TODO: implement this test
+		list1.set(1, 123);
+		// 21, 500, 3000;
+		assertEquals("Set index 1 to 123 is correct ", (Integer) 123, list1.get(1));
+		try {
+			list1.set(20, 200);
+			fail("Check invalid index");
+		} catch (IndexOutOfBoundsException e) {
+
+		}
+		
+		try {
+			endList.set(2, null);
+			fail("Check null");
+		} catch (NullPointerException e) {
+
+		}
 	    
 	}
 	

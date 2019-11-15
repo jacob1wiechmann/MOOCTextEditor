@@ -130,15 +130,51 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 * @throws IndexOutOfBoundsException If index is outside the bounds of the list
 	 * 
 	 */
-	public E remove(int index) 
+	public E remove(int index)
 	{
-		// TODO: Implement this method
-		LLNode<E> node = this.head;
-		while (node.next != null) {
-			System.out.println(node);
-			node = node.next;
+	if (index < 0 || index >= this.size) {
+		throw new IndexOutOfBoundsException("Index outside of the bounds of the list");
 	}
 
+	E removedElement = get(index);
+
+	// removing the head 
+	if (index == 0) {
+		if (head.next.next != null) {
+			head = head.next;
+			head.prev = null;
+		} 
+		// In case the list has a single element, just clear the head node's data to remove it.
+		else {
+			head.data = null; // clear data
+		}
+		size--;
+		return removedElement;
+	}
+
+	// removing the tail
+	if (index == size - 1) {
+		// new last node is the second last node
+		LLNode<E> newLast = tail.prev.prev;
+		newLast.next = tail;
+		tail.prev = newLast;
+		size--;
+		return removedElement;
+	}
+
+	// removing any other node between head and tail
+	LLNode<E> current = head;
+	for (int i = 0; i <= index; i++) {
+		if (i == index) {
+			current.prev.next = current.next;
+			current.next.prev = current.prev;
+			size--;
+		}
+		current = current.next;
+	}
+
+	return removedElement;
+}
 	/**
 	 * Set an index position in the list to a new element
 	 * @param index The index of the element to change

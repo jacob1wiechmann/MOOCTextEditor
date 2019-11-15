@@ -22,7 +22,9 @@ public class MyLinkedListTester {
 	MyLinkedList<Integer> emptyList;
 	MyLinkedList<Integer> longerList;
 	MyLinkedList<Integer> list1;
-	
+	MyLinkedList<Integer> endList;
+	MyLinkedList<Integer> indexList;
+	MyLinkedList<Integer> lst;
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -147,7 +149,7 @@ public class MyLinkedListTester {
 
 			}
 		// TODO: Add more tests here
-	}
+	
 	
 	/** Test adding an element into the end of the list, specifically
 	 *  public boolean add(E element)

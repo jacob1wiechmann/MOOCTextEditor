@@ -32,43 +32,23 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 */
 	public boolean add(E element ) 
 	{
-		// TODO: Implement this method
-		if (element == null)
-			throw new NullPointerException("Element added cannot be null");
-
-		LLNode<E> newElement = new LLNode<E>(element);
-		LLNode<E> last = tail.prev; // last -> tail
+		this.add(size, element);
 		
-		// last <-> newElement <-> tail
-		newElement.next = tail; // newElement -> tail
-		newElement.prev = last; // last <- newElement
-		tail.prev = newElement; // newElement <- tail
-		last.next = newElement; // last -> newElement
-		
-		// If this is the first element, update the head to point to the new element
-		// Note: the data in the tail is always null.
-		if (size == 0) {
-			head = newElement;
-		}
-		
-		size++;
 		return true;
 	}
-
 	/** Get the element at position index 
 	 * @throws IndexOutOfBoundsException if the index is out of bounds. */
 	public E get(int index) 
 	{
-		// TODO: Implement this method.
-		if (index >= size || index < 0 || size <= 0) {
-			throw new IndexOutOfBoundsException("Element out of bounds of LinkedList.");
+		if(index < 0 | index >= size){
+			throw new IndexOutOfBoundsException();
 		}
-
-		LLNode<E> current = head;
-		for (int i = 0; i < index; i++) {
-			current = current.next;
+	
+		LLNode<E> pointer = head; 
+		for (int i = 0; i <= index; i++){
+			pointer = pointer.next;
 		}
-		return current.data;
+		return pointer.data;
 	}
 
 	/**
@@ -78,45 +58,29 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 */
 	public void add(int index, E element ) 
 	{
-		// TODO: Implement this method
-		if (index > size || index < 0)
-			throw new IndexOutOfBoundsException("Invalid index.");
-		if (element == null)
-			throw new NullPointerException("Element added cannot be null.");
-
-		// Special case: index is the size of the list. Add to the end.
-		if (index == size) {
-			this.add(element);
-			return;
+		LLNode<E> newNode = new LLNode<E>(element);
+		
+		if(index < 0 | index > size){
+			throw new IndexOutOfBoundsException();
 		}
-
-		LLNode<E> newElement = new LLNode<E>(element);
-		LLNode<E> current = head;
-		for (int i = 0; i <= index; i++) {
-			// add the element before the current node
-			if (i == index) {
-				newElement.next = current;
-				newElement.prev = current.prev;
-
-				// update the current's previous to point to the new element
-				// make sure the current's previous is not null (only happens if
-				// adding the first element to the list)
-				if (current.prev != null) {
-					current.prev.next = newElement;
-					current.prev = newElement;
-				}
-				size++;
-			}
-			current = current.next;
-		}
-
-		if (index == 0) {
-			head = newElement;
+		
+		if(element == null){
+			throw new NullPointerException();
 		}
 	
+		LLNode<E> pointer = head; 
+		for (int i = 0; i <= index; i++){
+			pointer = pointer.next;
+		}
+		
+		pointer.prev.next = newNode;
+		newNode.next = pointer; 
+		newNode.prev = pointer.prev;
+		pointer.prev = newNode;
+		
+		this.size++;
+		
 	}
-
-
 	/** Return the size of the list */
 	public int size() 
 	{
@@ -132,49 +96,22 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 */
 	public E remove(int index)
 	{
-	if (index < 0 || index >= this.size) {
-		throw new IndexOutOfBoundsException("Index outside of the bounds of the list");
-	}
-
-	E removedElement = get(index);
-
-	// removing the head 
-	if (index == 0) {
-		if (head.next.next != null) {
-			head = head.next;
-			head.prev = null;
-		} 
-		// In case the list has a single element, just clear the head node's data to remove it.
-		else {
-			head.data = null; // clear data
+		if(index < 0 | index >= size){
+			throw new IndexOutOfBoundsException();
 		}
-		size--;
-		return removedElement;
-	}
-
-	// removing the tail
-	if (index == size - 1) {
-		// new last node is the second last node
-		LLNode<E> newLast = tail.prev.prev;
-		newLast.next = tail;
-		tail.prev = newLast;
-		size--;
-		return removedElement;
-	}
-
-	// removing any other node between head and tail
-	LLNode<E> current = head;
-	for (int i = 0; i <= index; i++) {
-		if (i == index) {
-			current.prev.next = current.next;
-			current.next.prev = current.prev;
-			size--;
+	
+		LLNode<E> pointer = head; 
+		for (int i = 0; i <= index; i++){
+			pointer = pointer.next;
 		}
-		current = current.next;
+		
+		pointer.prev.next = pointer.next;
+		pointer.next.prev = pointer.prev;
+		
+		this.size--;
+		
+		return pointer.data;
 	}
-
-	return removedElement;
-}
 	/**
 	 * Set an index position in the list to a new element
 	 * @param index The index of the element to change
@@ -184,52 +121,26 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 */
 	public E set(int index, E element) 
 	{
-		// TODO: Implement this method
-		if (index < 0 || index >= this.size) {
-			throw new IndexOutOfBoundsException("Index outside of the bounds of the list");
+		if(index < 0 | index >= size){
+			throw new IndexOutOfBoundsException();
 		}
-
-		E removedElement = get(index);
-
-		// removing the head 
-		if (index == 0) {
-			if (head.next.next != null) {
-				head = head.next;
-				head.prev = null;
-			} 
-			// In case the list has a single element, just clear the head node's data to remove it.
-			else {
-				head.data = null; // clear data
-			}
-			size--;
-			return removedElement;
+		
+		if (element == null){
+			throw new NullPointerException();
 		}
-
-		// removing the tail
-		if (index == size - 1) {
-			// new last node is the second last node
-			LLNode<E> newLast = tail.prev.prev;
-			newLast.next = tail;
-			tail.prev = newLast;
-			size--;
-			return removedElement;
+	
+		LLNode<E> pointer = head; 
+		for (int i = 0; i <= index; i++){
+			pointer = pointer.next;
 		}
-
-		// removing any other node between head and tail
-		LLNode<E> current = head;
-		for (int i = 0; i <= index; i++) {
-			if (i == index) {
-				current.prev.next = current.next;
-				current.next.prev = current.prev;
-				size--;
-			}
-			current = current.next;
-		}
-
-		return removedElement;
+		
+		E oldValue = pointer.data;
+	
+		pointer.data = element;
+		
+		return oldValue;
 	}   
 }
-
 class LLNode<E> 
 {
 	LLNode<E> prev;

@@ -40,8 +40,28 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	public boolean addWord(String word)
 	{
 	    //TODO: Implement this method.
-	    return false;
+		
+		TrieNode node=root;
+	    for (Character c : word.toLowerCase().toCharArray()) {
+			TrieNode child = node.getChild(c);
+
+			if (child != null) {
+				node = child;
+			} else {
+				node = node.insert(c);
+			}
+		}
+
+		if (node.endsWord()) {
+			return false;
+		}
+
+		node.setEndsWord(true);
+		++size;
+
+		return true;
 	}
+	
 	
 	/** 
 	 * Return the number of words in the dictionary.  This is NOT necessarily the same
@@ -50,7 +70,7 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	public int size()
 	{
 	    //TODO: Implement this method
-	    return 0;
+	    return size;
 	}
 	
 	
